@@ -5,24 +5,23 @@ steps:
   # 1. Aguarda o sistema inicializar completamente
   - wait-serial: 'Sistema de Monitoramento Inicializado'
 
-  # 2. Garante o estado inicial estável (Porta Fechada: Botão pressionado / nível lógico baixo ou alto dependendo da lógica)
-  # Vamos assumir: Pressionado/Fechado = valor 1 (ou solto = 0). Ajuste conforme seu circuito.
-  - set-control:
-      part-id: btn1
-      control: pressed
-      value: 1
-  - delay: 1s
-
-  # 3. Simula a abertura da porta (solta o botão)
+  # 2. Garante o estado inicial estável: Porta Fechada (Botão solto = valor 0 no Wokwi)
   - set-control:
       part-id: btn1
       control: pressed
       value: 0
+  - delay: 1s
 
-  # 4. O sistema não deve alarmar imediatamente. Aguarda um tempo menor que X (ex: 3 segundos se X=5)
+  # 3. Simula a abertura da porta (pressiona o botão para aterrar o pino = valor 1 no Wokwi)
+  - set-control:
+      part-id: btn1
+      control: pressed
+      value: 1
+
+  # 4. Aguarda um tempo menor que X (ex: 3 segundos)
   - delay: 3s
 
-  # 5. Aguarda completar o tempo X (mais 2.5s) e verifica se a mensagem de alarme de porta aberta é disparada
+  # 5. Aguarda completar o tempo X e verifica se o alarme dispara
   - wait-serial: 'ALERTA: Porta aberta por muito tempo!'
   
   - delay: 500ms
