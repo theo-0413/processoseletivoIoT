@@ -5,14 +5,16 @@ import time
 bot_pino = Pin(12, Pin.IN, Pin.PULL_UP)
 i2c = I2C(0, scl=Pin(21), sda=Pin(22), freq=400000) 
 
+# Limites do sistema
 lim_Time = 5000
 lim_Temp = 3.0
 
 t_aberto = None 
-temp_ref = 0.0  
+temp_ref = 0.0
+  
 alarme_porta = False
 alarme_temp = False
-alarme_ant = False
+alarme_anterior = False
 
 MPU_ADDR = 0x68
 PWR_MGMT_1 = 0x6B
@@ -66,9 +68,9 @@ while True:
     temp_ref = temp_at
 
   alarme_atual = alarme_porta or alarme_temp
-  if alarme_ant and not alarme_atual:
+  if alarme_anterior and not alarme_atual:
     time.sleep_ms(500)
     print("Status: Sistema Normalizado.")
-  alarme_ant = alarme_atual
+  alarme_anterior = alarme_atual
 
   time.sleep_ms(500)
