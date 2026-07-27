@@ -13,7 +13,7 @@ steps:
   - set-control:
       part-id: btn1
       control: pressed
-      value: 1
+      value: 0
   - delay: 1s
 
   # 3. Simula uma subida brusca de temperatura acima do limite Y (Ex: se Y = 3°C, sobe para 24°C)
