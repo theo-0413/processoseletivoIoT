@@ -12,7 +12,7 @@ t_aberto = None
 temp_ref = 0.0  
 alarme_porta = False
 alarme_temp = False
-alarme_anterior = False
+alarme_ant = False
 
 MPU_ADDR = 0x68
 PWR_MGMT_1 = 0x6B
@@ -66,9 +66,9 @@ while True:
     temp_ref = temp_at
 
   alarme_atual = alarme_porta or alarme_temp
-  if alarme_anterior and not alarme_atual:
+  if alarme_ant and not alarme_atual:
     time.sleep_ms(500)
     print("Status: Sistema Normalizado.")
-  alarme_anterior = alarme_atual
+  alarme_ant = alarme_atual
 
   time.sleep_ms(500)
