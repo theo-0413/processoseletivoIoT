@@ -30,11 +30,15 @@ def setup():
 
 # Função de leitura de temperatura com o imu1 a partir das fórmulas do datasheet
 def ler_temperatura():
-  dados = i2c.readfrom_mem(MPU_ADDR, TEMP_OUT_H, 2)
-  valor_bruto = (dados[0] << 8) | dados[1]
-  if valor_bruto > 32767:
-      valor_bruto -= 65536
-  return (valor_bruto / 340.0) + 36.53
+    try:
+        dados = i2c.readfrom_mem(MPU_ADDR, TEMP_OUT_H, 2)
+        valor_bruto = (dados[0] << 8) | dados[1]
+        if valor_bruto > 32767:
+            valor_bruto -= 65536
+        return (valor_bruto / 340.0) + 36.53
+    except OSError:
+        # Fallback value for simulation if sensor is missing
+        return 25.0
 
 # Função de verificação da porta (Botão pressionado)
 def verificar_botao():
